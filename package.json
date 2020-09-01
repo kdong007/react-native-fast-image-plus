@@ -6,8 +6,20 @@
   "repository": "git@github.com:kdong007/react-native-fast-image-plus.git",
   "author": "Mars Dong <kdong007@hotmail.com>",
   "license": "MIT",
+  "keywords": [
+    "cache",
+    "cached",
+    "fastimage",
+    "image",
+    "priority",
+    "placeholder",
+    "loading",
+    "error"
+  ],
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "yarn build",
+    "postpublish": "rm -rf dist/"
   },
   "dependencies": {
     "@types/react-native": "^0.63.13",
