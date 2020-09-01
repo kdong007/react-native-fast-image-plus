@@ -1,24 +1,22 @@
-import React, { useState, useCallback } from "react";
-import { StyleSheet, View, Image, ImageRequireSource } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Image, ViewProps, ImageProps } from "react-native";
 import FastImage, { FastImageProps } from "react-native-fast-image";
 
-export interface FastImagePlusProps extends FastImageProps {
-    loadingImg?: ImageRequireSource; // enforce local image
-    errImg?: ImageRequireSource; // enforce local image
-    placeholderImg?: ImageRequireSource; // enforce local image
+export interface FastImagePlusProps extends Omit<FastImageProps, "style"> {
+    style?: ViewProps["style"];
+    loadingImg?: ImageProps["source"];
+    errImg?: ImageProps["source"];
+    placeholderImg?: ImageProps["source"];
 }
 
 function interceptCallback<T extends (...args: any[]) => any>(
     handler: T,
     callback?: T
 ) {
-    return useCallback(
-        (...args) => {
-            handler(...args);
-            return callback?.apply(null, args);
-        },
-        [callback]
-    );
+    return (...args) => {
+        handler(...args);
+        return callback?.apply(null, args);
+    };
 }
 
 let defaultProps: Partial<FastImagePlusProps> = {};
@@ -90,6 +88,4 @@ FastImagePlus.setDefaultProps = (props: Partial<FastImagePlusProps>) => {
     };
 };
 
-export default React.memo(FastImagePlus);
-
-const t = React.memo(FastImagePlus);
+export default FastImagePlus;
